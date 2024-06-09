@@ -9,7 +9,7 @@ import './assets/styles/index.css'
 import Primevue from 'primevue/config'
 import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'
-import 'primevue/resources/themes/lara-dark-blue/theme.css'
+import 'primevue/resources/themes/bootstrap4-dark-blue/theme.css'
 
 import VirtualScroller from 'primevue/virtualscroller'
 import Ripple from 'primevue/ripple'

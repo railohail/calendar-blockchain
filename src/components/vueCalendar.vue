@@ -1,6 +1,16 @@
 <template>
   <div class="p-4">
-    <Button class="px-4 py-2 rounded border mb-4" label="Add activity" @click="visible = true" />
+    <Toolbar style="border-radius: 2rem; padding: 0.5rem 0.5rem 0.5rem 1.5rem; margin-bottom: 5px">
+      <template #start>
+        <h1 class="custom-h1">Calendar</h1>
+        <Button
+          style="margin-left: 30px"
+          class="px-1 py-1 rounded border"
+          label="Add activity"
+          @click="visible = true"
+        />
+      </template>
+    </Toolbar>
     <Dialog
       v-model:visible="visible"
       position="left"
@@ -46,6 +56,7 @@
       :attributes="attributes"
       :key="ghettoUpdate"
       :isDark="true"
+      style="border-radius: 1rem"
     >
       <template v-slot:day-content="props">
         <div v-if="props.day.inMonth" class="h-24 min-h-24">
@@ -97,6 +108,7 @@ import RadioButton from 'primevue/radiobutton'
 import Button from 'primevue/button'
 import Web3 from 'web3'
 import MyContractArtifact from '../../truffle/build/contracts/MyContract.json'
+import Toolbar from 'primevue/toolbar'
 
 const web3 = ref(null)
 const accounts = ref([])
@@ -239,6 +251,27 @@ const getEventsForDate = (date) => {
 </script>
 
 <style>
+.vc-container {
+  --vc-bg-blue: #2a323d; /* Replace with your desired blue color */
+  --vc-text-blue: #ffffff; /* Replace with your desired text color */
+  border-radius: 1rem;
+}
+.vc-container.vc-dark {
+  --vc-bg: var(--vc-bg-blue);
+  --vc-text: var(--vc-text-blue);
+  --vc-border: var(--vc-bg-blue);
+  --vc-border-hover: var(--vc-bg-blue);
+  --vc-border-focus: var(--vc-bg-blue);
+}
+.vc-header {
+  border-top-left-radius: 2rem; /* Add border-radius to the top-left corner of the header */
+  border-top-right-radius: 2rem; /* Add border-radius to the top-right corner of the header */
+}
+
+.vc-weeks {
+  border-bottom-left-radius: 1rem; /* Add border-radius to the bottom-left corner of the weeks */
+  border-bottom-right-radius: 1rem; /* Add border-radius to the bottom-right corner of the weeks */
+}
 .vc-day:not(.on-right) {
   border-right: 1px solid rgb(226, 232, 240);
 }
@@ -269,5 +302,9 @@ const getEventsForDate = (date) => {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 150px; /* Adjust the max-width as needed */
+}
+.custom-h1 {
+  font-weight: bold;
+  font-style: italic;
 }
 </style>
