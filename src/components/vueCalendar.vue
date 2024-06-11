@@ -10,6 +10,22 @@
           @click="visible = true"
         />
       </template>
+      <template #end>
+        <div class="p-d-flex p-ai-center">
+          <div class="p-d-flex">
+            <div class="p-field-checkbox mr-3">
+              <RadioButton id="all" value="all" v-model="selectedFilterColor" />
+              <label for="all" class="ml-2">All</label>
+            </div>
+            <div v-for="color in colors" :key="color.value" class="p-field-checkbox mr-3">
+              <RadioButton :id="color.value" :value="color.value" v-model="selectedFilterColor" />
+              <label :for="color.value" class="ml-2" :class="color.textClass">{{
+                color.label
+              }}</label>
+            </div>
+          </div>
+        </div>
+      </template>
     </Toolbar>
     <Dialog
       v-model:visible="visible"
@@ -109,6 +125,7 @@ import Button from 'primevue/button'
 import Web3 from 'web3'
 import MyContractArtifact from '../../truffle/build/contracts/MyContract.json'
 import Toolbar from 'primevue/toolbar'
+const selectedFilterColor = ref('all')
 
 const web3 = ref(null)
 const accounts = ref([])
@@ -240,10 +257,13 @@ const getEventsForDate = (date) => {
   const events = attributes.value[0].customData.events
   const filteredEvents = events.filter((event) => {
     const eventDate = new Date(event.date)
+    const colorMatch =
+      selectedFilterColor.value === 'all' || event.class === selectedFilterColor.value
     return (
       eventDate.getFullYear() === date.getFullYear() &&
       eventDate.getMonth() === date.getMonth() &&
-      eventDate.getDate() === date.getDate()
+      eventDate.getDate() === date.getDate() &&
+      colorMatch
     )
   })
   return filteredEvents
@@ -306,5 +326,9 @@ const getEventsForDate = (date) => {
 .custom-h1 {
   font-weight: bold;
   font-style: italic;
+}
+.p-field-checkbox {
+  display: inline-flex;
+  align-items: center;
 }
 </style>
